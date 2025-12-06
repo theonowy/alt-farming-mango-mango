@@ -1,4 +1,4 @@
-setfpscap(30)
+setfpscap(10)
 local JobIDGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local Barrier = Instance.new("TextLabel")
