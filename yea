@@ -1,0 +1,697 @@
+setfpscap(30)
+local JobIDGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local Barrier = Instance.new("TextLabel")
+local Label = Instance.new("TextLabel")
+local PasteJobID = Instance.new("TextBox")
+local JoinGame = Instance.new("TextButton")
+local CopyJobID = Instance.new("TextButton")
+local Close = Instance.new("TextButton")
+local GuiService = game:GetService("StarterGui")
+local TeleService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+
+JobIDGui.Name = "JobIDGui"
+JobIDGui.Parent = CoreGui
+JobIDGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = JobIDGui
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+MainFrame.BorderColor3 = Color3.new(1, 0.666667, 0)
+MainFrame.BorderSizePixel = 3
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(0, 307, 0, 137)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+Barrier.Name = "Barrier"
+Barrier.Parent = MainFrame
+Barrier.BackgroundColor3 = Color3.new(1, 0.666667, 0)
+Barrier.BorderSizePixel = 0
+Barrier.Position = UDim2.new(0, 0, 0.186000004, 0)
+Barrier.Size = UDim2.new(1, 0, 0, 3)
+Barrier.Font = Enum.Font.SourceSans
+Barrier.Text = ""
+Barrier.TextColor3 = Color3.new(0, 0, 0)
+Barrier.TextSize = 14
+
+Label.Name = "Label"
+Label.Parent = MainFrame
+Label.AnchorPoint = Vector2.new(0.5, 0)
+Label.BackgroundColor3 = Color3.new(1, 1, 1)
+Label.BackgroundTransparency = 1
+Label.Position = UDim2.new(0.5, 0, 0, 0)
+Label.Size = UDim2.new(0, 200, 0, 28)
+Label.Font = Enum.Font.Nunito
+Label.Text = "夜明けのゲームに参加"
+Label.TextColor3 = Color3.new(1, 0.666667, 0)
+Label.TextSize = 28
+
+PasteJobID.Name = "PasteJobID"
+PasteJobID.Parent = MainFrame
+PasteJobID.AnchorPoint = Vector2.new(0.5, 0)
+PasteJobID.BackgroundColor3 = Color3.new(1, 1, 1)
+PasteJobID.Position = UDim2.new(0.5, 0, 0.275999993, 0)
+PasteJobID.Size = UDim2.new(0, 283, 0, 27)
+PasteJobID.Font = Enum.Font.SourceSans
+PasteJobID.PlaceholderColor3 = Color3.new(0, 0, 0)
+PasteJobID.PlaceholderText = "Paste Job ID in here."
+PasteJobID.Text = ""
+PasteJobID.TextColor3 = Color3.new(0, 0, 0)
+PasteJobID.TextSize = 20
+
+JoinGame.Name = "JoinGame"
+JoinGame.Parent = MainFrame
+JoinGame.AnchorPoint = Vector2.new(0.5, 0)
+JoinGame.BackgroundColor3 = Color3.new(1, 0.666667, 0)
+JoinGame.Position = UDim2.new(0.5, 0, 0.73299998, 0)
+JoinGame.Size = UDim2.new(0, 229, 0, 26)
+JoinGame.Font = Enum.Font.SourceSans
+JoinGame.Text = "  Join Game"
+JoinGame.TextColor3 = Color3.new(0, 0, 0)
+JoinGame.TextSize = 25
+JoinGame.TextXAlignment = Enum.TextXAlignment.Left
+JoinGame.MouseButton1Down:connect(function()
+   if CoreGui.RobloxPromptGui:FindFirstChild("promptOverlay") then
+       CoreGui.RobloxPromptGui.promptOverlay.Visible = false
+   end
+TeleService:TeleportToPlaceInstance(game.PlaceId,PasteJobID.Text,Players.LocalPlayer)
+if CoreGui.RobloxPromptGui.promptOverlay:WaitForChild("ErrorPrompt") then
+       if CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ButtonArea:FindFirstChild("OkButton") then
+           game:GetService("GuiService"):ClearError()
+           GuiService:SetCore("SendNotification", {Title = "夜明けのゲームに参加",Text = "Error, Invalid Job ID";})
+       else
+           GuiService:SetCore("SendNotification", {Title = "夜明けのゲームに参加",Text = "Successful, Joining Server";})  
+       end
+end
+end)
+
+CopyJobID.Name = "CopyJobID"
+CopyJobID.Parent = MainFrame
+CopyJobID.AnchorPoint = Vector2.new(0.5, 0)
+CopyJobID.BackgroundColor3 = Color3.new(1, 0.666667, 0)
+CopyJobID.Position = UDim2.new(0.5, 0, 0.542999983, 0)
+CopyJobID.Size = UDim2.new(0, 229, 0, 26)
+CopyJobID.Font = Enum.Font.SourceSans
+CopyJobID.Text = "Copy Job ID  "
+CopyJobID.TextColor3 = Color3.new(0, 0, 0)
+CopyJobID.TextSize = 25
+CopyJobID.TextXAlignment = Enum.TextXAlignment.Right
+CopyJobID.MouseButton1Down:connect(function()
+GuiService:SetCore("SendNotification", {Title = "夜明けのゲームに参加",Text = "Copied Job ID to Your Clipboard";})
+setclipboard(game.JobId)
+end)
+
+Close.Name = "Close"
+Close.Parent = MainFrame
+Close.BackgroundColor3 = Color3.new(1, 1, 1)
+Close.BackgroundTransparency = 1
+Close.Position = UDim2.new(0.917502344, 0, 0.0291970801, 0)
+Close.Size = UDim2.new(0, 25, 0, 13)
+Close.Font = Enum.Font.SourceSans
+Close.Text = "x"
+Close.TextColor3 = Color3.new(1, 0.666667, 0)
+Close.TextSize = 30
+Close.MouseButton1Down:connect(function()
+GuiService:SetCore("SendNotification", {Title = "夜明けのゲームに参加",Text = "Closing Gui";})
+JobIDGui:Destroy()
+end)
+
+setfpscap(10)
+if not game:IsLoaded() then
+game.Loaded:Wait()
+end
+task.wait(0.8)
+
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+while not player do
+task.wait()
+player = Players.LocalPlayer
+end
+
+pcall(function()
+StarterGui:SetCore("SendNotification", {
+Title = "sup",
+Text = "soo, if you didnt read, reset your main soo the alt farm can work (DONT PUT MORE THAN +500 KILLS.)",
+Duration = 8
+})
+end)
+
+do
+local moderatorIDs = {
+268312397, 2627262431, 82610981, 292707170, 449404798, 221681529,
+41022405, 56721213, 38307780, 2039323684, 1041867508, 7340338226,
+1001242712, 2992126732, 3235334930, 8172452618, 8182327909, 6075366524,
+8217675225, 5554257146, 3629864555, 7753754636, 4354859764, 7819468433,
+8073683106, 6085229191, 3027915029, 8100644723, 8164557160, 5500012275,
+278097946, 422755031, 108098587, 77342385
+}
+
+local function checkForModerators()
+for _, plr in pairs(Players:GetPlayers()) do
+if table.find(moderatorIDs, plr.UserId) then
+pcall(function() player:Kick("Moderator detected: " .. plr.Name) end)
+return true
+end
+end
+return false
+end
+
+task.spawn(function()
+while true do
+if checkForModerators() then break end
+task.wait(0.6)
+end
+end)
+
+player.CharacterAdded:Connect(function()
+task.wait(1)
+task.spawn(function()
+while true do
+if checkForModerators() then break end
+task.wait(0.6)
+end
+end)
+end)
+end
+
+pcall(function()
+local VirtualUser = game:GetService("VirtualUser")
+player.Idled:Connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+end)
+
+do
+local targetPosition = Vector3.new(438.30792236328125, 439.51055908203125, -375.7077331542969)
+local active = true
+
+local function teleportLoop()
+while active do
+if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+pcall(function()
+player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+end)
+end
+task.wait(0.12)
+end
+end
+
+task.spawn(teleportLoop)
+end
+
+local DataStorage = {}
+function DataStorage.saveData(key, value)
+if type(key) ~= "string" then return end
+if writefile then
+pcall(function()
+writefile("alt_farm_" .. key .. ".txt", tostring(value))
+end)
+end
+end
+function DataStorage.loadData(key)
+if type(key) ~= "string" then return nil end
+if readfile then
+local ok, res = pcall(function()
+return readfile("alt_farm_" .. key .. ".txt")
+end)
+if ok and res then
+return res
+end
+end
+return nil
+end
+
+local function nuclearReset()
+if not player then return end
+local storedPosition = nil
+if player.Character then
+local root = player.Character:FindFirstChild("HumanoidRootPart")
+if root then storedPosition = root.Position end
+end
+
+if player.Character then
+local humanoid = player.Character:FindFirstChildOfClass("Humanoid") or player.Character:FindFirstChild("Humanoid")
+if humanoid then
+pcall(function() humanoid.Health = 0 end)
+task.wait(0.12)
+end
+end
+
+if player.Character then
+pcall(function() player.Character:BreakJoints() end)
+task.wait(0.12)
+end
+
+task.wait(1)
+if player.Character and storedPosition then
+local root = player.Character:FindFirstChild("HumanoidRootPart")
+if root then
+pcall(function() root.CFrame = CFrame.new(storedPosition) end)
+end
+end
+end
+
+local existingGui = CoreGui:FindFirstChild("HealthMonitorGui")
+if existingGui then existingGui:Destroy() end
+
+local screenGui, toggleButton, textBox, confirmButton, savedLabel, menuButton, playersListFrame, scrollFrame, closeButton
+
+local function createGui()
+screenGui = Instance.new("ScreenGui")
+screenGui.Name = "HealthMonitorGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = CoreGui
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 250, 0, 140)
+mainFrame.Position = UDim2.new(0.5, -125, 0.06, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 8)
+mainCorner.Parent = mainFrame
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Name = "ToggleButton"
+toggleButton.Text = "Start Alt Farm Script"
+toggleButton.Size = UDim2.new(0, 230, 0, 40)
+toggleButton.Position = UDim2.new(0.5, -115, 0.05, 0)
+toggleButton.BackgroundColor3 = Color3.fromRGB(0, 100, 255)
+toggleButton.TextColor3 = Color3.fromRGB(255,255,255)
+toggleButton.Font = Enum.Font.SourceSansBold
+toggleButton.TextSize = 16
+toggleButton.Parent = mainFrame
+
+local tbCorner = Instance.new("UICorner")
+tbCorner.CornerRadius = UDim.new(0, 6)
+tbCorner.Parent = toggleButton
+
+local inputFrame = Instance.new("Frame")
+inputFrame.Name = "InputFrame"
+inputFrame.Size = UDim2.new(0, 230, 0, 80)
+inputFrame.Position = UDim2.new(0.5, -115, 0.38, 0)
+inputFrame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+inputFrame.BorderSizePixel = 0
+inputFrame.Parent = mainFrame
+
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 6)
+frameCorner.Parent = inputFrame
+
+local title = Instance.new("TextLabel")
+title.Text = "Put the user id of the main here"
+title.Size = UDim2.new(1, -10, 0, 20)
+title.Position = UDim2.new(0, 5, 0, 4)
+title.BackgroundTransparency = 1
+title.TextColor3 = Color3.fromRGB(200, 200, 200)
+title.Font = Enum.Font.SourceSansSemibold
+title.TextSize = 14
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = inputFrame
+
+local savedLabel = Instance.new("TextLabel")
+savedLabel.Name = "SavedLabel"
+savedLabel.Text = "Saved ID: none"
+savedLabel.Size = UDim2.new(0, 120, 0, 18)
+savedLabel.Position = UDim2.new(0, 8, 0, 26)
+savedLabel.BackgroundTransparency = 1
+savedLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+savedLabel.Font = Enum.Font.SourceSans
+savedLabel.TextSize = 12
+savedLabel.TextXAlignment = Enum.TextXAlignment.Left
+savedLabel.Parent = inputFrame
+
+local textBox = Instance.new("TextBox")
+textBox.Name = "IDTextBox"
+textBox.PlaceholderText = "insert user id here"
+textBox.Text = ""
+textBox.Size = UDim2.new(0, 120, 0, 28)
+textBox.Position = UDim2.new(0, 8, 0, 48)
+textBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+textBox.TextColor3 = Color3.fromRGB(255,255,255)
+textBox.Font = Enum.Font.SourceSans
+textBox.TextSize = 14
+textBox.ClearTextOnFocus = true
+textBox.Parent = inputFrame
+
+local textBoxCorner = Instance.new("UICorner")
+textBoxCorner.CornerRadius = UDim.new(0, 4)
+textBoxCorner.Parent = textBox
+
+local confirmButton = Instance.new("TextButton")
+confirmButton.Name = "ConfirmButton"
+confirmButton.Text = "✓"
+confirmButton.Size = UDim2.new(0, 35, 0, 28)
+confirmButton.Position = UDim2.new(0, 135, 0, 48)
+confirmButton.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
+confirmButton.TextColor3 = Color3.fromRGB(255,255,255)
+confirmButton.Font = Enum.Font.SourceSansBold
+confirmButton.TextSize = 18
+confirmButton.Parent = inputFrame
+
+local confirmCorner = Instance.new("UICorner")
+confirmCorner.CornerRadius = UDim.new(0, 4)
+confirmCorner.Parent = confirmButton
+
+local menuButton = Instance.new("TextButton")
+menuButton.Name = "MenuButton"
+menuButton.Text = "..."
+menuButton.Size = UDim2.new(0, 35, 0, 28)
+menuButton.Position = UDim2.new(0, 175, 0, 48)
+menuButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+menuButton.TextColor3 = Color3.fromRGB(255,255,255)
+menuButton.Font = Enum.Font.SourceSansBold
+menuButton.TextSize = 16
+menuButton.Parent = inputFrame
+
+local menuCorner = Instance.new("UICorner")
+menuCorner.CornerRadius = UDim.new(0, 4)
+menuCorner.Parent = menuButton
+
+-- Players List Frame
+playersListFrame = Instance.new("Frame")
+playersListFrame.Name = "PlayersListFrame"
+playersListFrame.Size = UDim2.new(0, 280, 0, 300)
+playersListFrame.Position = UDim2.new(0.5, -140, 0.5, -150)
+playersListFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+playersListFrame.BorderSizePixel = 0
+playersListFrame.Visible = false
+playersListFrame.Parent = screenGui
+
+local playersListCorner = Instance.new("UICorner")
+playersListCorner.CornerRadius = UDim.new(0, 8)
+playersListCorner.Parent = playersListFrame
+
+local playersListTitle = Instance.new("TextLabel")
+playersListTitle.Text = "Players in Server"
+playersListTitle.Size = UDim2.new(1, 0, 0, 30)
+playersListTitle.Position = UDim2.new(0, 0, 0, 0)
+playersListTitle.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+playersListTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+playersListTitle.Font = Enum.Font.SourceSansBold
+playersListTitle.TextSize = 16
+playersListTitle.Parent = playersListFrame
+
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 8)
+titleCorner.Parent = playersListTitle
+
+closeButton = Instance.new("TextButton")
+closeButton.Text = "X"
+closeButton.Size = UDim2.new(0, 25, 0, 25)
+closeButton.Position = UDim2.new(1, -30, 0, 2)
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextSize = 14
+closeButton.Parent = playersListTitle
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 4)
+closeCorner.Parent = closeButton
+
+scrollFrame = Instance.new("ScrollingFrame")
+scrollFrame.Size = UDim2.new(1, -10, 1, -40)
+scrollFrame.Position = UDim2.new(0, 5, 0, 35)
+scrollFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+scrollFrame.BorderSizePixel = 0
+scrollFrame.ScrollBarThickness = 6
+scrollFrame.Parent = playersListFrame
+
+local scrollCorner = Instance.new("UICorner")
+scrollCorner.CornerRadius = UDim.new(0, 6)
+scrollCorner.Parent = scrollFrame
+
+local listLayout = Instance.new("UIListLayout")
+listLayout.Padding = UDim.new(0, 5)
+listLayout.Parent = scrollFrame
+
+return screenGui, toggleButton, textBox, confirmButton, savedLabel, menuButton, playersListFrame, scrollFrame, closeButton
+end
+
+local targetUserId = nil
+local isScriptActive = false
+local monitorCoroutine = nil
+
+local function waitForTargetToJoin()
+while isScriptActive do
+local p = Players:GetPlayerByUserId(targetUserId)
+if p then
+return p
+end
+local got = nil
+local conn
+conn = Players.PlayerAdded:Connect(function(pl)
+if pl.UserId == targetUserId then
+got = pl
+if conn then conn:Disconnect() end
+end
+end)
+repeat
+if not isScriptActive then
+if conn then conn:Disconnect() end
+return nil
+end
+local check = Players:GetPlayerByUserId(targetUserId)
+if check then
+got = check
+if conn then conn:Disconnect() end
+break
+end
+task.wait(0.5)
+until got
+if got then return got end
+end
+return nil
+end
+
+local function monitorTargetPlayer()
+if not targetUserId then return end
+
+local targetPlayer = Players:GetPlayerByUserId(targetUserId)
+if not targetPlayer then
+targetPlayer = waitForTargetToJoin()
+if not targetPlayer then
+return
+end
+end
+
+local function bindCharacter(character)
+if not character then return end
+local humanoid = character:FindFirstChildOfClass("Humanoid") or character:FindFirstChild("Humanoid")
+if humanoid then
+humanoid.Died:Connect(function()
+if player.Character and player.Character:FindFirstChildOfClass("Humanoid") and player.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
+task.wait(2)
+nuclearReset()
+end
+end)
+end
+end
+
+if targetPlayer.Character then bindCharacter(targetPlayer.Character) end
+targetPlayer.CharacterAdded:Connect(bindCharacter)
+
+while isScriptActive do
+if not Players:GetPlayerByUserId(targetUserId) then
+local back = waitForTargetToJoin()
+if not back then break end
+targetPlayer = back
+if targetPlayer.Character then bindCharacter(targetPlayer.Character) end
+targetPlayer.CharacterAdded:Connect(bindCharacter)
+else
+local tp = Players:GetPlayerByUserId(targetUserId)
+if tp and tp.Character then
+local humanoid = tp.Character:FindFirstChildOfClass("Humanoid") or tp.Character:FindFirstChild("Humanoid")
+if humanoid and humanoid.Health <= 0 then
+if player.Character and player.Character:FindFirstChildOfClass("Humanoid") and player.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
+task.wait(2)
+nuclearReset()
+end
+repeat task.wait(0.2) until (Players:GetPlayerByUserId(targetUserId) and Players:GetPlayerByUserId(targetUserId).Character and Players:GetPlayerByUserId(targetUserId).Character:FindFirstChildOfClass("Humanoid") and Players:GetPlayerByUserId(targetUserId).Character:FindFirstChildOfClass("Humanoid").Health > 0) or not isScriptActive
+end
+end
+task.wait(0.12)
+end
+end
+end
+
+local function updatePlayersList()
+if not scrollFrame then 
+    warn("ScrollFrame não encontrado!")
+    return 
+end
+
+for _, child in pairs(scrollFrame:GetChildren()) do
+    if child:IsA("TextButton") then
+        child:Destroy()
+    end
+end
+
+local players = Players:GetPlayers()
+for i, plr in pairs(players) do
+    local playerButton = Instance.new("TextButton")
+    playerButton.Name = "Player_" .. plr.UserId
+    playerButton.Text = plr.Name .. " (" .. plr.UserId .. ")"
+    playerButton.Size = UDim2.new(1, -10, 0, 30)
+    playerButton.Position = UDim2.new(0, 5, 0, (i-1) * 35)
+    playerButton.BackgroundColor3 = Color3.fromRGB(65, 65, 65)
+    playerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    playerButton.Font = Enum.Font.SourceSans
+    playerButton.TextSize = 14
+    playerButton.TextXAlignment = Enum.TextXAlignment.Left
+    playerButton.Parent = scrollFrame
+
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 4)
+    buttonCorner.Parent = playerButton
+
+    local padding = Instance.new("UIPadding")
+    padding.PaddingLeft = UDim.new(0, 8)
+    padding.Parent = playerButton
+
+    playerButton.MouseButton1Click:Connect(function()
+        targetUserId = plr.UserId
+        DataStorage.saveData("target_id", targetUserId)
+        savedLabel.Text = "Saved ID: " .. tostring(targetUserId)
+        textBox.Text = tostring(targetUserId)
+        playersListFrame.Visible = false
+    end)
+
+    -- Highlight the current target
+    if targetUserId == plr.UserId then
+        playerButton.BackgroundColor3 = Color3.fromRGB(0, 100, 200)
+    end
+end
+
+scrollFrame.CanvasSize = UDim2.new(0, 0, 0, math.max(#players * 35, scrollFrame.AbsoluteSize.Y))
+end
+
+local function setupPlayersListEvents()
+Players.PlayerAdded:Connect(function()
+if playersListFrame.Visible then
+updatePlayersList()
+end
+end)
+
+Players.PlayerRemoving:Connect(function()
+if playersListFrame.Visible then
+updatePlayersList()
+end
+end)
+end
+
+task.wait(0.6)
+screenGui, toggleButton, textBox, confirmButton, savedLabel, menuButton, playersListFrame, scrollFrame, closeButton = createGui()
+
+setupPlayersListEvents()
+
+local loadedId = DataStorage.loadData("target_id")
+if loadedId and tonumber(loadedId) then
+targetUserId = tonumber(loadedId)
+savedLabel.Text = "Saved ID: " .. tostring(loadedId)
+end
+
+confirmButton.MouseButton1Click:Connect(function()
+local inputId = textBox.Text
+if inputId and tonumber(inputId) then
+targetUserId = tonumber(inputId)
+DataStorage.saveData("target_id", targetUserId)
+savedLabel.Text = "Saved ID: " .. tostring(targetUserId)
+textBox.Text = ""
+end
+end)
+
+toggleButton.MouseButton1Click:Connect(function()
+if not targetUserId then return end
+isScriptActive = not isScriptActive
+if isScriptActive then
+toggleButton.Text = "Stop Alt Farm Script"
+toggleButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+if not monitorCoroutine or coroutine.status(monitorCoroutine) == "dead" then
+monitorCoroutine = coroutine.create(function() pcall(monitorTargetPlayer) end)
+coroutine.resume(monitorCoroutine)
+end
+else
+toggleButton.Text = "Start Alt Farm Script"
+toggleButton.BackgroundColor3 = Color3.fromRGB(0, 100, 255)
+end
+end)
+
+menuButton.MouseButton1Click:Connect(function()
+playersListFrame.Visible = not playersListFrame.Visible
+if playersListFrame.Visible then
+    updatePlayersList()
+end
+end)
+
+-- Close button functionality
+closeButton.MouseButton1Click:Connect(function()
+playersListFrame.Visible = false
+end)
+
+do
+local noclipEnabled = true
+
+local function disableCollisions(character)
+if not character then return end
+for _, part in pairs(character:GetDescendants()) do
+if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
+pcall(function() part.CanCollide = false end)
+end
+end
+end
+
+player.CharacterAdded:Connect(function(char)
+task.wait(0.05)
+if noclipEnabled then
+disableCollisions(char)
+end
+task.spawn(function()
+while char.Parent do
+if noclipEnabled then
+disableCollisions(char)
+end
+task.wait(0.5)
+end
+end)
+end)
+
+if player.Character then
+disableCollisions(player.Character)
+task.spawn(function()
+while player.Character and player.Character.Parent do
+if noclipEnabled then
+disableCollisions(player.Character)
+end
+task.wait(0.5)
+end
+end)
+end
+
+RunService.Stepped:Connect(function()
+if not noclipEnabled then return end
+if player.Character then
+for _, part in pairs(player.Character:GetDescendants()) do
+if part:IsA("BasePart") then
+if part.CanCollide ~= false then
+pcall(function() part.CanCollide = false end)
+end
+end
+end
+end
+end)
+end
